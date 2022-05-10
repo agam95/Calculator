@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Red+Hat+Text:wght@700&family=Spartan:wght@700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+
+    <title>Frontend Mentor | Calculator app</title>
+  </head>
+  <body>
+    <header>
+      <h2>calc</h2>
+      <div class="designToggleMain">
+        <p class="theme">THEME</p>
+        <div class="designToggle">
+          <div class="themeNumber">
+            <p>1</p>
+            <p>2</p>
+            <p>3</p>
+          </div>
+          <div class="theme-toggle">
+            <label class="custom-radio-button">
+              <input
+                id="first"
+                name="toggle-state"
+                onclick="setTheme('one')"
+                type="radio"
+                checked
+              />
+              <span class="checkmark"></span>
+            </label>
+            <label class="custom-radio-button">
+              <input
+                id="second"
+                name="toggle-state"
+                onclick="setTheme('two')"
+                type="radio"
+              />
+              <span class="checkmark"></span>
+            </label>
+            <label class="custom-radio-button">
+              <input
+                id="third"
+                name="toggle-state"
+                onclick="setTheme('three')"
+                type="radio"
+              />
+              <span class="checkmark"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <input type="text" id="total" />
+    <div></div>
+    <div class="calculate">
+      <div class="small">
+        <div class="box number">7</div>
+        <div class="box number">8</div>
+        <div class="box number">9</div>
+        <div class="box" id="del">DEL</div>
+        <div class="box number">4</div>
+        <div class="box number">5</div>
+        <div class="box number">6</div>
+        <div class="box operator" id="plus">+</div>
+        <div class="box number">1</div>
+        <div class="box number">2</div>
+        <div class="box number">3</div>
+        <div class="box operator" id="minus">-</div>
+        <div class="box number" id="comma">,</div>
+        <div class="box number">0</div>
+        <div class="box operator" id="devide">/</div>
+        <div class="box operator" id="multiply">x</div>
+      </div>
+      <div class="medium">
+        <div class="box" id="reset">RESET</div>
+        <div class="box" id="equal">=</div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

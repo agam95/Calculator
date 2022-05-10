@@ -1,0 +1,218 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+:root,
+:root.one {
+  --body-bgColor: hsl(222, 26%, 31%);
+  --header-textColor: white;
+  --screen-bgColor: hsl(224, 36%, 15%);
+  --keypad-bgColor: hsl(223, 31%, 20%);
+  --mainKeys-bgColor: hsl(30, 25%, 89%);
+  --delReskey-bgColor: hsl(225, 21%, 49%);
+  --equalKey-bgColor: hsl(6, 63%, 50%);
+  --keyText-color: hsl(221, 14%, 31%);
+  --keyshadow-bgColor: hsl(28, 16%, 65%);
+  --delReskeyshadow-bgColor: hsl(224, 28%, 35%);
+  --equalkeyshadow-bgColor: hsl(6, 70%, 34%);
+}
+
+:root.two {
+  --body-bgColor: hsl(0, 0%, 90%);
+  --header-textColor: hsl(60, 10%, 19%);
+  --screen-bgColor: hsl(0, 0%, 93%);
+  --keypad-bgColor: hsl(0, 5%, 81%);
+  --mainKeys-bgColor: hsl(45, 7%, 89%);
+  --delReskey-bgColor: hsl(185, 42%, 37%);
+  --equalKey-bgColor: hsl(25, 98%, 40%);
+  --keyText-color: hsl(60, 10%, 19%);
+  --keyshadow-bgColor: hsl(35, 11%, 61%);
+  --delReskeyshadow-bgColor: hsl(185, 58%, 25%);
+  --equalkeyshadow-bgColor: hsl(25, 99%, 27%);
+}
+
+:root.three {
+  --body-bgColor: hsl(268, 75%, 9%);
+  --header-textColor: hsl(52, 100%, 62%);
+  --screen-bgColor: hsl(268, 71%, 12%);
+  --keypad-bgColor: hsl(268, 71%, 12%);
+  --mainKeys-bgColor: hsl(268, 47%, 21%);
+  --delReskey-bgColor: hsl(281, 89%, 26%);
+  --equalKey-bgColor: hsl(176, 100%, 44%);
+  --keyText-color: hsl(52, 100%, 62%);
+  --keyshadow-bgColor: hsl(290, 70%, 36%);
+  --delReskeyshadow-bgColor: hsl(285, 91%, 52%);
+  --equalkeyshadow-bgColor: hsl(177, 92%, 70%);
+}
+
+body {
+  background-color: var(--body-bgColor);
+  font-family: "Outfit", sans-serif;
+  font-family: "Red Hat Text", sans-serif;
+  font-family: "Spartan", sans-serif;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+header {
+  color: var(--header-textColor);
+  height: 15vh;
+  width: 325px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header h2 {
+  font-size: 30px;
+}
+
+.designToggleMain {
+  display: flex;
+  justify-content: space-between;
+  width: 145px;
+  font-size: 12px;
+}
+
+.themeNumber {
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 5px;
+}
+
+.theme {
+  align-self: flex-end;
+  margin-bottom: 5px;
+}
+
+.theme-toggle {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  border-radius: 50px;
+  background-color: var(--keypad-bgColor);
+  width: 70px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.custom-radio-button {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  margin-right: 4px;
+}
+
+.custom-radio-button input {
+  display: none;
+}
+
+.custom-radio-button .checkmark {
+  width: 15px;
+  height: 15px;
+  background-color: var(--equalKey-bgColor);
+  border-radius: 50%;
+  display: inline-block;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.custom-radio-button input:checked + .checkmark {
+  opacity: 1;
+  display: inline-block;
+}
+
+#total {
+  background-color: var(--screen-bgColor);
+  border: none;
+  outline: none;
+  color: var(--header-textColor);
+  text-align: end;
+  padding: 20px;
+  width: 285px;
+  height: 30px;
+  border-radius: 10px;
+  font-size: 26px;
+  font-weight: bold;
+  scroll-behavior: none;
+  scrollbar-width: none;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.calculate {
+  background-color: var(--keypad-bgColor);
+  margin-top: 1.7rem;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 325px;
+  height: 368px;
+  padding-bottom: 25px;
+  padding-top: 25px;
+}
+
+.small {
+  display: grid;
+  grid-template-columns: 60px 60px 60px 60px;
+  row-gap: 16px;
+  column-gap: 14px;
+}
+
+.medium {
+  display: grid;
+  grid-template-columns: 134px 134px;
+  column-gap: 14px;
+  margin-top: 12px;
+}
+
+.small .box {
+  background-color: var(--mainKeys-bgColor);
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  font-size: 20px;
+  color: var(--keyText-color);
+  cursor: pointer;
+  box-shadow: 0px 4px 0px var(--keyshadow-bgColor);
+}
+
+.medium .box {
+  color: white;
+  border-radius: 5px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+#del {
+  font-size: 16px;
+}
+
+#del,
+#reset {
+  color: white;
+  background-color: var(--delReskey-bgColor);
+  box-shadow: 0px 4px 0px var(--delReskeyshadow-bgColor);
+}
+
+#equal {
+  background-color: var(--equalKey-bgColor);
+  box-shadow: 0px 4px 0px var(--equalkeyshadow-bgColor);
+}
