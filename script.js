@@ -17,29 +17,22 @@ const calculator = {
 };
 
 function inputDigit(digit) {
-  const { displayValue } = calculator;
-  calculator.displayValue = displayValue === "0" ? digit : displayValue + digit;
+  const displayValue = calculator.displayValue;
+
+  let number = "";
+  if (displayValue === "0") {
+    number = digit;
+  } else {
+    number = displayValue + digit;
+  }
+
+  calculator.displayValue = number;
 }
 
 function inputDecimal(dot) {
-  // If the `displayValue` does not contain a decimal point
   if (!calculator.displayValue.includes(dot)) {
-    // Append the decimal point
     calculator.displayValue += dot;
   }
-}
-
-function handleOperator(nextOperator) {
-  const { firstOperand, displayValue, operator } = calculator;
-  const inputValue = parseFloat(displayValue);
-
-  if (firstOperand === null && !isNaN(inputValue)) {
-    calculator.firstOperand = inputValue;
-  }
-
-  calculator.waitingForSecondOperand = true;
-  calculator.operator = nextOperator;
-  console.log(calculator);
 }
 
 //Calculator Display
@@ -57,8 +50,7 @@ buttons.forEach(function (button) {
     }
 
     if (target.classList.contains("operator")) {
-      handleOperator(target.value);
-      updateDisplay();
+      console.log(target.value);
       return;
     }
 
