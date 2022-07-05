@@ -6,49 +6,74 @@ const operator = document.querySelectorAll(".operator");
 const reset = document.getElementById("reset");
 const del = document.getElementById("del");
 const decimal = document.querySelector(".decimal");
-
 const buttons = [...numbers, ...operator, reset, del, decimal];
 
-const input = document.getElementById("total");
+//Calculator values
+const calculator = {
+  displayValue: "0",
+  firstOperand: null,
+  waitingForSecondOperand: false,
+  operator: null,
+};
+
+function inputDigit(digit) {
+  const { displayValue } = calculator;
+  calculator.displayValue = displayValue === "0" ? digit : displayValue + digit;
+}
+
+function inputDecimal(dot) {
+  // If the `displayValue` does not contain a decimal point
+  if (!calculator.displayValue.includes(dot)) {
+    // Append the decimal point
+    calculator.displayValue += dot;
+  }
+}
+
+function handleOperator(nextOperator) {
+  const { firstOperand, displayValue, operator } = calculator;
+  const inputValue = parseFloat(displayValue);
+
+  if (firstOperand === null && !isNaN(inputValue)) {
+    calculator.firstOperand = inputValue;
+  }
+
+  calculator.waitingForSecondOperand = true;
+  calculator.operator = nextOperator;
+  console.log(calculator);
+}
+
+//Calculator Display
+function updateDisplay() {
+  const display = document.getElementById("total");
+  display.value = calculator.displayValue;
+}
+updateDisplay();
 
 buttons.forEach(function (button) {
-  button.addEventListener("click", function (event) {
-    const target = event.target;
+  button.addEventListener("click", (event) => {
+    const { target } = event;
+    if (!target.matches("button")) {
+      return;
+    }
 
     if (target.classList.contains("operator")) {
-      input.value = target.value;
-      console.log("operator", target.value);
+      handleOperator(target.value);
+      updateDisplay();
       return;
     }
 
     if (target.classList.contains("decimal")) {
-      input.value = target.value;
-      console.log("decimal", target.value);
+      inputDecimal(target.value);
+      updateDisplay();
       return;
     }
 
     if (target.classList.contains("all-clear")) {
-      input.value = target.value;
       console.log("clear", target.value);
       return;
     }
 
-    console.log("digit", target.value);
-
-    if (target.matches("button")) {
-      const keyContent = target.value;
-      const displayedNum = input.value;
-      if (target.value) {
-        if (displayedNum === "0") {
-          input.value = keyContent;
-        } else {
-          input.value = displayedNum + keyContent;
-        }
-      }
-    }
+    inputDigit(target.value);
+    updateDisplay();
   });
-});
-
-reset.addEventListener("click", function () {
-  input.value = 0;
 });
