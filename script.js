@@ -1,14 +1,3 @@
-const setTheme = (theme) => (document.documentElement.className = theme);
-
-//BUTTONS
-const numbers = document.querySelectorAll(".number");
-const operator = document.querySelectorAll(".operator");
-const reset = document.getElementById("reset");
-const del = document.getElementById("del");
-const decimal = document.querySelector(".decimal");
-const buttons = [...numbers, ...operator, reset, del, decimal];
-
-//Calculator values
 const calculator = {
   displayValue: "0",
   firstOperand: null,
@@ -17,55 +6,106 @@ const calculator = {
 };
 
 function inputDigit(digit) {
-  const displayValue = calculator.displayValue;
+  const { displayValue, waitingForSecondOperand } = calculator;
 
-  let number = "";
-  if (displayValue === "0") {
-    number = digit;
+  if (waitingForSecondOperand === true) {
+    calculator.displayValue = digit;
+    calculator.waitingForSecondOperand = false;
   } else {
-    number = displayValue + digit;
+    calculator.displayValue =
+      displayValue === "0" ? digit : displayValue + digit;
   }
-
-  calculator.displayValue = number;
 }
 
 function inputDecimal(dot) {
+  if (calculator.waitingForSecondOperand === true) {
+    calculator.displayValue = "0.";
+    calculator.waitingForSecondOperand = false;
+    return;
+  }
+
   if (!calculator.displayValue.includes(dot)) {
     calculator.displayValue += dot;
   }
 }
 
-//Calculator Display
+function handleOperator(nextOperator) {
+  const { firstOperand, displayValue, operator } = calculator;
+  const inputValue = parseFloat(displayValue);
+
+  if (operator && calculator.waitingForSecondOperand) {
+    calculator.operator = nextOperator;
+    return;
+  }
+
+  if (firstOperand == null && !isNaN(inputValue)) {
+    calculator.firstOperand = inputValue;
+  } else if (operator) {
+    const result = calculate(firstOperand, inputValue, operator);
+
+    calculator.displayValue = `${parseFloat(result.toFixed(7))}`;
+    calculator.firstOperand = result;
+  }
+
+  calculator.waitingForSecondOperand = true;
+  calculator.operator = nextOperator;
+}
+
+function calculate(firstOperand, secondOperand, operator) {
+  if (operator === "+") {
+    return firstOperand + secondOperand;
+  } else if (operator === "-") {
+    return firstOperand - secondOperand;
+  } else if (operator === "*") {
+    return firstOperand * secondOperand;
+  } else if (operator === "/") {
+    return firstOperand / secondOperand;
+  }
+
+  return secondOperand;
+}
+
+function resetCalculator() {
+  calculator.displayValue = "0";
+  calculator.firstOperand = null;
+  calculator.waitingForSecondOperand = false;
+  calculator.operator = null;
+}
+
 function updateDisplay() {
-  const display = document.getElementById("total");
+  const display = document.querySelector(".calculator-screen");
   display.value = calculator.displayValue;
 }
+
 updateDisplay();
 
-buttons.forEach(function (button) {
-  button.addEventListener("click", (event) => {
-    const { target } = event;
-    if (!target.matches("button")) {
-      return;
-    }
+const keys = document.querySelector(".calculator-keys");
+keys.addEventListener("click", (event) => {
+  const { target } = event;
+  const { value } = target;
+  if (!target.matches("button")) {
+    return;
+  }
 
-    if (target.classList.contains("operator")) {
-      console.log(target.value);
-      return;
-    }
+  switch (value) {
+    case "+":
+    case "-":
+    case "*":
+    case "/":
+    case "=":
+      handleOperator(value);
+      break;
+    case ".":
+      inputDecimal(value);
+      break;
+    case "all-clear":
+      resetCalculator();
+      break;
+    default:
+      if (Number.isInteger(parseFloat(value))) {
+        inputDigit(value);
+      }
+  }
 
-    if (target.classList.contains("decimal")) {
-      inputDecimal(target.value);
-      updateDisplay();
-      return;
-    }
-
-    if (target.classList.contains("all-clear")) {
-      console.log("clear", target.value);
-      return;
-    }
-
-    inputDigit(target.value);
-    updateDisplay();
-  });
+  updateDisplay();
 });
